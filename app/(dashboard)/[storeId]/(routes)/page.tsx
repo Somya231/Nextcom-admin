@@ -1,6 +1,4 @@
-import { PrismaClient } from "@/lib/generated/prisma";
-
-const prisma = new PrismaClient();
+import prismadb from "@/lib/prismadb";
 
 interface DashboardInterface {
     params: { storeId: string }
@@ -9,10 +7,12 @@ interface DashboardInterface {
 const DashboardPage: React.FC<DashboardInterface> = async ({
     params
 }) => {
+    
+    const { storeId } = await params;
 
-    const store = await prisma.store.findFirst({
+    const store = await prismadb.store.findFirst({
         where: {
-            id: params.storeId
+            id: storeId
         }
     })
 
